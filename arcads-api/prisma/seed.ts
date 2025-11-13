@@ -43,8 +43,8 @@ async function main() {
     transactionCost: number;
   }[] = [];
 
-  // Generate 100 transactions with varied data
-  for (let i = 0; i < 100; i++) {
+  // Generate 30 transactions with varied data
+  for (let i = 0; i < 30; i++) {
     const city = cities[Math.floor(Math.random() * cities.length)];
     const propertyType =
       propertyTypes[Math.floor(Math.random() * propertyTypes.length)];
