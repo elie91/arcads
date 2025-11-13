@@ -66,21 +66,34 @@ cd arcads-api && npm install
 cd ../arcads-web && npm install
 cd ..
 
-# 2. Start PostgreSQL
+# 2. Create environment files
+# Backend .env
+cat > arcads-api/.env << EOF
+DATABASE_URL="postgresql://user:password@localhost:5432/arcads"
+PORT=3001
+NODE_ENV=development
+EOF
+
+# Frontend .env.local
+cat > arcads-web/.env.local << EOF
+NEXT_PUBLIC_API_URL=http://localhost:3001
+EOF
+
+# 3. Start PostgreSQL
 docker compose up -d postgres
 
-# 3. Run Prisma migrations
+# 4. Run Prisma migrations
 cd arcads-api
 npx prisma migrate dev
 npx prisma generate
 
-# 4. Seed the database with test data
+# 5. Seed the database with test data
 npm run prisma:seed
 
-# 5. Start the API (port 3001)
+# 6. Start the API (port 3001)
 npm run start:dev
 
-# 6. In another terminal, start the frontend (port 3000)
+# 7. In another terminal, start the frontend (port 3000)
 cd ../arcads-web
 npm run dev
 ```
@@ -89,7 +102,11 @@ npm run dev
 
 ### Environment Variables
 
+**⚠️ Important:** You must create these environment files before running the application.
+
 #### Backend (arcads-api/.env)
+
+Create a `.env` file in the `arcads-api` directory:
 
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/arcads"
@@ -99,8 +116,24 @@ NODE_ENV=development
 
 #### Frontend (arcads-web/.env.local)
 
+Create a `.env.local` file in the `arcads-web` directory:
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+**Quick create commands:**
+```bash
+# From project root
+cat > arcads-api/.env << EOF
+DATABASE_URL="postgresql://user:password@localhost:5432/arcads"
+PORT=3001
+NODE_ENV=development
+EOF
+
+cat > arcads-web/.env.local << EOF
+NEXT_PUBLIC_API_URL=http://localhost:3001
+EOF
 ```
 
 ## Available Make Commands
@@ -218,4 +251,21 @@ If your database is empty:
 ```bash
 cd arcads-api
 npm run prisma:seed
+```
+
+### Missing Environment Files
+
+If you see connection errors or undefined environment variables:
+```bash
+# Create backend .env file
+cat > arcads-api/.env << EOF
+DATABASE_URL="postgresql://user:password@localhost:5432/arcads"
+PORT=3001
+NODE_ENV=development
+EOF
+
+# Create frontend .env.local file
+cat > arcads-web/.env.local << EOF
+NEXT_PUBLIC_API_URL=http://localhost:3001
+EOF
 ```
