@@ -117,6 +117,12 @@ format: ## Format code for both API and Web
 	cd $(API_DIR) && npm run format
 	@echo "$(GREEN)Web will be formatted by lint-staged...$(NC)"
 
+check-types: ## Check types for both API and Web
+	@echo "$(GREEN)Checking types for API...$(NC)"
+	cd $(API_DIR) && npm run check-types
+	@echo "$(GREEN)Checking types for Web...$(NC)"
+	cd $(WEB_DIR) && npm run check-types
+
 # Testing
 test: ## Run tests for API
 	@echo "$(GREEN)Running API tests...$(NC)"
