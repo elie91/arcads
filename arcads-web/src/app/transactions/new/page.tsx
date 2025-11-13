@@ -38,19 +38,17 @@ import { useCreateTransaction } from "@/hooks/queries/useTransactions";
 import { PropertyType } from "@/types";
 
 const formSchema = z.object({
-  city: z.string().min(1, "La ville est requise"),
-  propertyType: z.nativeEnum(PropertyType, "Le type de propriété est requis"),
+  city: z.string().min(1, "The city is required"),
+  propertyType: z.nativeEnum(PropertyType, "The property type is required"),
   area: z
     .number()
-    .positive("La surface doit être un nombre positif")
-    .min(1, "La surface doit être au moins 1m²"),
-  transactionDate: z.string().min(1, "La date de transaction est requise"),
+    .positive("The area must be a positive number")
+    .min(1, "The area must be at least 1m²"),
+  transactionDate: z.string().min(1, "The transaction date is required"),
   transactionNetValue: z
     .number()
-    .positive("La valeur nette doit être un nombre positif"),
-  transactionCost: z
-    .number()
-    .positive("Le coût doit être un nombre positif"),
+    .positive("The net value must be a positive number"),
+  transactionCost: z.number().positive("The cost must be a positive number"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -78,7 +76,9 @@ export default function NewTransactionPage() {
       await createMutation.mutateAsync(data);
       router.push("/transactions");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Une erreur est survenue");
+      setError(
+        err instanceof Error ? err.message : "An unexpected error occurred"
+      );
     }
   };
 
@@ -91,20 +91,18 @@ export default function NewTransactionPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Nouvelle Transaction
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight">New Transaction</h1>
           <p className="text-muted-foreground">
-            Créer une nouvelle transaction immobilière
+            Create a new real estate transaction
           </p>
         </div>
       </div>
 
       <Card className="max-w-2xl">
         <CardHeader>
-          <CardTitle>Informations de la transaction</CardTitle>
+          <CardTitle>Transaction Information</CardTitle>
           <CardDescription>
-            Remplissez tous les champs pour créer une nouvelle transaction
+            Fill in all fields to create a new transaction
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -115,7 +113,7 @@ export default function NewTransactionPage() {
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ville</FormLabel>
+                    <FormLabel>City</FormLabel>
                     <FormControl>
                       <Input placeholder="Paris" {...field} />
                     </FormControl>
@@ -129,26 +127,24 @@ export default function NewTransactionPage() {
                 name="propertyType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Type de propriété</FormLabel>
+                    <FormLabel>Property Type</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Sélectionner un type" />
+                          <SelectValue placeholder="Select a type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value={PropertyType.APARTMENT}>
-                          Appartement
+                          Apartment
                         </SelectItem>
                         <SelectItem value={PropertyType.HOUSE}>
-                          Maison
+                          House
                         </SelectItem>
-                        <SelectItem value={PropertyType.LAND}>
-                          Terrain
-                        </SelectItem>
+                        <SelectItem value={PropertyType.LAND}>Land</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -161,7 +157,7 @@ export default function NewTransactionPage() {
                 name="area"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Surface (m²)</FormLabel>
+                    <FormLabel>Area (m²)</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -181,7 +177,7 @@ export default function NewTransactionPage() {
                 name="transactionDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Date de transaction</FormLabel>
+                    <FormLabel>Transaction Date</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
                     </FormControl>
@@ -196,7 +192,7 @@ export default function NewTransactionPage() {
                   name="transactionNetValue"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Valeur nette (€)</FormLabel>
+                      <FormLabel>Net Value (€)</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -209,7 +205,7 @@ export default function NewTransactionPage() {
                         />
                       </FormControl>
                       <FormDescription>
-                        Prix de vente de la transaction
+                        Sale price of the transaction
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -221,7 +217,7 @@ export default function NewTransactionPage() {
                   name="transactionCost"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Coût (€)</FormLabel>
+                      <FormLabel>Cost (€)</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -234,7 +230,7 @@ export default function NewTransactionPage() {
                         />
                       </FormControl>
                       <FormDescription>
-                        Coût total de la transaction
+                        Total cost of the transaction
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -255,15 +251,15 @@ export default function NewTransactionPage() {
                   className="flex-1"
                 >
                   {createMutation.isPending
-                    ? "Création en cours..."
-                    : "Créer la transaction"}
+                    ? "Creating..."
+                    : "Create Transaction"}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => router.push("/transactions")}
                 >
-                  Annuler
+                  Cancel
                 </Button>
               </div>
             </form>

@@ -16,19 +16,19 @@ export class ReportsService {
 
   /**
    * GET /reports/highest-margin
-   * Retourne les 5 transactions avec la marge la plus élevée
+   * Returns the top 5 transactions with the highest margin
    */
   async getHighestMargin(): Promise<HighestMarginReportDto> {
     this.logger.log('Fetching highest margin transactions');
 
     const transactions = await this.prisma.transaction.findMany({
       orderBy: {
-        transactionNetValue: 'desc', // Tri par valeur nette décroissante pour avoir les plus grosses marges
+        transactionNetValue: 'desc', // Sort by descending net value to get the highest margins
       },
-      take: 100, // On prend plus que nécessaire pour calculer la marge
+      take: 100, // Take more than necessary to calculate the margin
     });
 
-    // Calculer la marge pour chaque transaction et trier par marge
+    // Calculate the margin for each transaction and sort by margin
     const transactionsWithMargin = transactions
       .map((transaction) => {
         const margin =
@@ -50,8 +50,8 @@ export class ReportsService {
           marginPercentage,
         } as HighestMarginItemDto;
       })
-      .sort((a, b) => b.margin - a.margin) // Trier par marge décroissante
-      .slice(0, 5); // Prendre les 5 premiers
+      .sort((a, b) => b.margin - a.margin) // Sort by descending margin
+      .slice(0, 5); // Take the first 5
 
     this.logger.log(
       `Found ${transactionsWithMargin.length} highest margin transactions`,
@@ -65,30 +65,30 @@ export class ReportsService {
 
   /**
    * GET /reports/weekly-average-margin
-   * Retourne la marge moyenne de la semaine en cours vs la semaine précédente
+   * Returns the average margin for the current week vs the previous week
    */
   async getWeeklyAverageMargin(): Promise<WeeklyAverageMarginDto> {
     this.logger.log('Calculating weekly average margin');
 
     const now = new Date();
 
-    // Calculer les dates de début et fin pour la semaine en cours (lundi à dimanche)
+    // Calculate start and end dates for current week (Monday to Sunday)
     const currentWeekStart = new Date(now);
-    currentWeekStart.setDate(now.getDate() - now.getDay() + 1); // Lundi
+    currentWeekStart.setDate(now.getDate() - now.getDay() + 1); // Monday
     currentWeekStart.setHours(0, 0, 0, 0);
 
     const currentWeekEnd = new Date(currentWeekStart);
-    currentWeekEnd.setDate(currentWeekStart.getDate() + 6); // Dimanche
+    currentWeekEnd.setDate(currentWeekStart.getDate() + 6); // Sunday
     currentWeekEnd.setHours(23, 59, 59, 999);
 
-    // Calculer les dates pour la semaine précédente
+    // Calculate dates for previous week
     const previousWeekStart = new Date(currentWeekStart);
     previousWeekStart.setDate(currentWeekStart.getDate() - 7);
 
     const previousWeekEnd = new Date(currentWeekEnd);
     previousWeekEnd.setDate(currentWeekEnd.getDate() - 7);
 
-    // Récupérer les transactions de la semaine en cours
+    // Fetch current week transactions
     const currentWeekTransactions = await this.prisma.transaction.findMany({
       where: {
         transactionDate: {
@@ -98,7 +98,7 @@ export class ReportsService {
       },
     });
 
-    // Récupérer les transactions de la semaine précédente
+    // Fetch previous week transactions
     const previousWeekTransactions = await this.prisma.transaction.findMany({
       where: {
         transactionDate: {
@@ -108,7 +108,7 @@ export class ReportsService {
       },
     });
 
-    // Calculer les moyennes pour la semaine en cours
+    // Calculate averages for current week
     const currentWeekMargins = currentWeekTransactions.map(
       (t) => t.transactionNetValue - t.transactionCost,
     );
@@ -129,7 +129,7 @@ export class ReportsService {
           }, 0) / currentWeekTransactions.length
         : 0;
 
-    // Calculer les moyennes pour la semaine précédente
+    // Calculate averages for previous week
     const previousWeekMargins = previousWeekTransactions.map(
       (t) => t.transactionNetValue - t.transactionCost,
     );
@@ -150,7 +150,7 @@ export class ReportsService {
           }, 0) / previousWeekTransactions.length
         : 0;
 
-    // Calculer le changement
+    // Calculate the change
     const marginDifference = currentWeekAvgMargin - previousWeekAvgMargin;
     const percentageChange =
       previousWeekAvgMargin > 0
@@ -190,15 +190,15 @@ export class ReportsService {
 
   /**
    * GET /reports/city-performance
-   * Retourne les 5 meilleures villes par valeur moyenne de transaction
+   * Returns the top 5 cities by average transaction value
    */
   async getCityPerformance(): Promise<CityPerformanceReportDto> {
     this.logger.log('Calculating city performance');
 
-    // Récupérer toutes les transactions groupées par ville via Prisma
+    // Retrieve all transactions grouped by city via Prisma
     const transactions = await this.prisma.transaction.findMany();
 
-    // Grouper par ville et calculer les statistiques
+    // Group by city and calculate statistics
     const cityStats = new Map<string, CityPerformanceItemDto>();
 
     transactions.forEach((transaction) => {
@@ -227,7 +227,7 @@ export class ReportsService {
       stats.averageMarginPercentage += marginPercentage;
     });
 
-    // Calculer les moyennes et convertir en tableau
+    // Calculate averages and convert to array
     const cityPerformances = Array.from(cityStats.values()).map((stats) => ({
       ...stats,
       averageTransactionValue: stats.totalValue / stats.transactionCount,
@@ -236,7 +236,7 @@ export class ReportsService {
         stats.averageMarginPercentage / stats.transactionCount,
     }));
 
-    // Trier par valeur moyenne décroissante et prendre le top 5
+    // Sort by average transaction value descending and take the top 5
     const topCities = cityPerformances
       .sort((a, b) => b.averageTransactionValue - a.averageTransactionValue)
       .slice(0, 5);

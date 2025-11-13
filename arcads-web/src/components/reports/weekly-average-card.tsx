@@ -20,10 +20,8 @@ export function WeeklyAverageCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Marge Moyenne Hebdomadaire</CardTitle>
-          <CardDescription>
-            Comparaison avec la semaine précédente
-          </CardDescription>
+          <CardTitle>Weekly Average Margin</CardTitle>
+          <CardDescription>Comparison with the previous week</CardDescription>
         </CardHeader>
         <CardContent>
           <Skeleton className="h-32 w-full" />
@@ -36,13 +34,11 @@ export function WeeklyAverageCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Marge Moyenne Hebdomadaire</CardTitle>
+          <CardTitle>Weekly Average Margin</CardTitle>
         </CardHeader>
         <CardContent>
           <Alert variant="destructive">
-            <AlertDescription>
-              Erreur lors du chargement des données
-            </AlertDescription>
+            <AlertDescription>Error while loading data</AlertDescription>
           </Alert>
         </CardContent>
       </Card>
@@ -53,12 +49,10 @@ export function WeeklyAverageCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Marge Moyenne Hebdomadaire</CardTitle>
+          <CardTitle>Weekly Average Margin</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
-            Aucune donnée disponible
-          </p>
+          <p className="text-sm text-muted-foreground">No data available</p>
         </CardContent>
       </Card>
     );
@@ -69,16 +63,14 @@ export function WeeklyAverageCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Marge Moyenne Hebdomadaire</CardTitle>
-        <CardDescription>
-          Comparaison avec la semaine précédente
-        </CardDescription>
+        <CardTitle>Weekly Average Margin</CardTitle>
+        <CardDescription>Comparison with the previous week</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex items-baseline justify-between">
             <p className="text-sm font-medium text-muted-foreground">
-              Semaine en cours
+              Current week
             </p>
             <p className="text-2xl font-bold">
               {new Intl.NumberFormat("fr-FR", {
@@ -90,14 +82,14 @@ export function WeeklyAverageCard() {
           </div>
           <p className="text-sm text-muted-foreground">
             {data.currentWeek.transactionCount} transactions •{" "}
-            {data.currentWeek.averageMarginPercentage.toFixed(1)}% de marge
+            {data.currentWeek.averageMarginPercentage.toFixed(1)}% margin
           </p>
         </div>
 
         <div className="border-t pt-4">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-muted-foreground">
-              Semaine précédente
+              Previous week
             </p>
             <p className="text-lg font-semibold">
               {new Intl.NumberFormat("fr-FR", {

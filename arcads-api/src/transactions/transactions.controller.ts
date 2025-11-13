@@ -20,7 +20,7 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   /**
-   * POST /transactions - Créer une nouvelle transaction
+   * POST /transactions - Create a new transaction
    */
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -33,7 +33,7 @@ export class TransactionsController {
   }
 
   /**
-   * GET /transactions - Récupérer toutes les transactions
+   * GET /transactions - Get all transactions
    */
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -43,7 +43,7 @@ export class TransactionsController {
   }
 
   /**
-   * GET /transactions/:id - Récupérer une transaction par ID
+   * GET /transactions/:id - Get a transaction by ID
    */
   @Get(':id')
   @HttpCode(HttpStatus.OK)

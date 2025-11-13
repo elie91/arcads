@@ -9,7 +9,7 @@ export class TransactionsService {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * Créer une nouvelle transaction
+   * Create a new transaction
    */
   async create(
     createTransactionDto: CreateTransactionDto,
@@ -28,7 +28,7 @@ export class TransactionsService {
   }
 
   /**
-   * Récupérer toutes les transactions
+   * Get all transactions
    */
   async findAll(): Promise<TransactionResponseDto[]> {
     this.logger.log('Fetching all transactions');
@@ -46,7 +46,7 @@ export class TransactionsService {
   }
 
   /**
-   * Récupérer une transaction par ID
+   * Get a transaction by ID
    */
   async findOne(id: string): Promise<TransactionResponseDto> {
     this.logger.log(`Fetching transaction with id: ${id}`);

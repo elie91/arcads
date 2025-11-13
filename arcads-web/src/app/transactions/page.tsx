@@ -26,14 +26,12 @@ export default function TransactionsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Transactions</h1>
-            <p className="text-muted-foreground">
-              Liste de toutes les transactions
-            </p>
+            <p className="text-muted-foreground">List of all transactions</p>
           </div>
           <Button asChild>
             <Link href="/transactions/new">
               <PlusIcon className="mr-2 h-4 w-4" />
-              Nouvelle Transaction
+              New Transaction
             </Link>
           </Button>
         </div>
@@ -53,9 +51,7 @@ export default function TransactionsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Transactions</h1>
         </div>
         <Alert variant="destructive">
-          <AlertDescription>
-            Erreur lors du chargement des transactions
-          </AlertDescription>
+          <AlertDescription>Error while loading transactions</AlertDescription>
         </Alert>
       </div>
     );
@@ -67,13 +63,13 @@ export default function TransactionsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Transactions</h1>
           <p className="text-muted-foreground">
-            {transactions?.length || 0} transaction(s) au total
+            {transactions?.length || 0} total transaction(s)
           </p>
         </div>
         <Button asChild>
           <Link href="/transactions/new">
             <PlusIcon className="mr-2 h-4 w-4" />
-            Nouvelle Transaction
+            New Transaction
           </Link>
         </Button>
       </div>
@@ -83,14 +79,14 @@ export default function TransactionsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Ville</TableHead>
+                <TableHead>City</TableHead>
                 <TableHead>Type</TableHead>
-                <TableHead className="text-right">Surface</TableHead>
+                <TableHead className="text-right">Area</TableHead>
                 <TableHead className="text-right">Date</TableHead>
-                <TableHead className="text-right">Valeur Nette</TableHead>
-                <TableHead className="text-right">Coût</TableHead>
-                <TableHead className="text-right">Marge</TableHead>
-                <TableHead className="text-right">% Marge</TableHead>
+                <TableHead className="text-right">Net Value</TableHead>
+                <TableHead className="text-right">Cost</TableHead>
+                <TableHead className="text-right">Margin</TableHead>
+                <TableHead className="text-right">% Margin</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -141,11 +137,11 @@ export default function TransactionsPage() {
         </div>
       ) : (
         <div className="flex h-[450px] flex-col items-center justify-center rounded-lg border border-dashed">
-          <p className="text-muted-foreground">Aucune transaction trouvée</p>
+          <p className="text-muted-foreground">No transactions found</p>
           <Button asChild className="mt-4">
             <Link href="/transactions/new">
               <PlusIcon className="mr-2 h-4 w-4" />
-              Créer votre première transaction
+              Create your first transaction
             </Link>
           </Button>
         </div>

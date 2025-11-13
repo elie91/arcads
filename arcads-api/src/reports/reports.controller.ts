@@ -14,7 +14,7 @@ export class ReportsController {
 
   /**
    * GET /reports/highest-margin
-   * Retourne les 5 transactions avec la marge la plus élevée
+   * Returns the top 5 transactions with the highest margin
    */
   @Get('highest-margin')
   @HttpCode(HttpStatus.OK)
@@ -25,7 +25,7 @@ export class ReportsController {
 
   /**
    * GET /reports/weekly-average-margin
-   * Retourne la marge moyenne hebdomadaire avec comparaison
+   * Returns the weekly average margin with comparison
    */
   @Get('weekly-average-margin')
   @HttpCode(HttpStatus.OK)
@@ -36,7 +36,7 @@ export class ReportsController {
 
   /**
    * GET /reports/city-performance
-   * Retourne les 5 meilleures villes par valeur moyenne
+   * Returns the top 5 cities by average value
    */
   @Get('city-performance')
   @HttpCode(HttpStatus.OK)

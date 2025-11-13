@@ -18,10 +18,8 @@ export function HighestMarginCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Top 5 Marges les Plus Élevées</CardTitle>
-          <CardDescription>
-            Transactions avec les meilleures marges
-          </CardDescription>
+          <CardTitle>Top 5 Highest Margins</CardTitle>
+          <CardDescription>Transactions with the best margins</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
@@ -38,13 +36,11 @@ export function HighestMarginCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Top 5 Marges les Plus Élevées</CardTitle>
+          <CardTitle>Top 5 Highest Margins</CardTitle>
         </CardHeader>
         <CardContent>
           <Alert variant="destructive">
-            <AlertDescription>
-              Erreur lors du chargement des données
-            </AlertDescription>
+            <AlertDescription>Error while loading data</AlertDescription>
           </Alert>
         </CardContent>
       </Card>
@@ -55,12 +51,10 @@ export function HighestMarginCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Top 5 Marges les Plus Élevées</CardTitle>
+          <CardTitle>Top 5 Highest Margins</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
-            Aucune donnée disponible
-          </p>
+          <p className="text-sm text-muted-foreground">No data available</p>
         </CardContent>
       </Card>
     );
@@ -69,10 +63,8 @@ export function HighestMarginCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Top 5 Marges les Plus Élevées</CardTitle>
-        <CardDescription>
-          Transactions avec les meilleures marges
-        </CardDescription>
+        <CardTitle>Top 5 Highest Margins</CardTitle>
+        <CardDescription>Transactions with the best margins</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

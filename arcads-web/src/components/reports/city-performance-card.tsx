@@ -19,10 +19,8 @@ export function CityPerformanceCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Top 5 Villes par Performance</CardTitle>
-          <CardDescription>
-            Classement par valeur moyenne de transaction
-          </CardDescription>
+          <CardTitle>Top 5 Cities by Performance</CardTitle>
+          <CardDescription>Ranked by average transaction value</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
@@ -39,13 +37,11 @@ export function CityPerformanceCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Top 5 Villes par Performance</CardTitle>
+          <CardTitle>Top 5 Cities by Performance</CardTitle>
         </CardHeader>
         <CardContent>
           <Alert variant="destructive">
-            <AlertDescription>
-              Erreur lors du chargement des données
-            </AlertDescription>
+            <AlertDescription>Error while loading data</AlertDescription>
           </Alert>
         </CardContent>
       </Card>
@@ -56,12 +52,10 @@ export function CityPerformanceCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Top 5 Villes par Performance</CardTitle>
+          <CardTitle>Top 5 Cities by Performance</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
-            Aucune donnée disponible
-          </p>
+          <p className="text-sm text-muted-foreground">No data available</p>
         </CardContent>
       </Card>
     );
@@ -70,10 +64,8 @@ export function CityPerformanceCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Top 5 Villes par Performance</CardTitle>
-        <CardDescription>
-          Classement par valeur moyenne de transaction
-        </CardDescription>
+        <CardTitle>Top 5 Cities by Performance</CardTitle>
+        <CardDescription>Ranked by average transaction value</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -93,7 +85,7 @@ export function CityPerformanceCard() {
                       {city.transactionCount} transactions
                     </Badge>
                     <Badge variant="outline" className="text-xs">
-                      {city.averageMarginPercentage.toFixed(1)}% marge
+                      {city.averageMarginPercentage.toFixed(1)}% margin
                     </Badge>
                   </div>
                 </div>
@@ -106,7 +98,7 @@ export function CityPerformanceCard() {
                     maximumFractionDigits: 0,
                   }).format(city.averageTransactionValue)}
                 </p>
-                <p className="text-sm text-muted-foreground">valeur moy.</p>
+                <p className="text-sm text-muted-foreground">avg. value</p>
               </div>
             </div>
           ))}

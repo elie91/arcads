@@ -114,12 +114,12 @@ describe('ReportsService', () => {
       expect(result.topTransactions).toHaveLength(5);
       expect(result.count).toBe(5);
 
-      // Vérifier que les transactions sont triées par marge décroissante
+      // Check that transactions are sorted by descending margin
       const margins = result.topTransactions.map((t) => t.margin);
       expect(margins[0]).toBeGreaterThanOrEqual(margins[1]);
       expect(margins[1]).toBeGreaterThanOrEqual(margins[2]);
 
-      // Vérifier que la première transaction a la plus grosse marge
+      // Verify that the first transaction has the highest margin
       const firstTransaction = result.topTransactions[0];
       expect(firstTransaction.margin).toBe(150000); // Lyon: 600000 - 450000
       expect(firstTransaction.city).toBe('Lyon');
@@ -167,13 +167,13 @@ describe('ReportsService', () => {
 
   describe('getWeeklyAverageMargin', () => {
     it('should calculate weekly average margin correctly', async () => {
-      // Mock pour la semaine en cours
+      // Mock for the current week
       const currentWeekTransactions = [
         mockTransactions[0],
         mockTransactions[1],
       ];
 
-      // Mock pour la semaine précédente
+      // Mock for the previous week
       const previousWeekTransactions = [mockTransactions[2]];
 
       mockPrismaService.transaction.findMany
@@ -189,11 +189,11 @@ describe('ReportsService', () => {
       expect(result.currentWeek.transactionCount).toBe(2);
       expect(result.previousWeek.transactionCount).toBe(1);
 
-      // Vérifier que les moyennes sont calculées
+      // Verify that averages are calculated
       expect(result.currentWeek.averageMargin).toBeGreaterThan(0);
       expect(result.previousWeek.averageMargin).toBeGreaterThan(0);
 
-      // Vérifier le changement en pourcentage
+      // Verify the percentage change
       expect(typeof result.change.percentageChange).toBe('number');
       expect(typeof result.change.marginDifference).toBe('number');
     });
@@ -245,7 +245,7 @@ describe('ReportsService', () => {
       expect(result.topCities).toHaveLength(4); // Paris, Lyon, Marseille, Bordeaux
       expect(result.count).toBe(4);
 
-      // Vérifier que les villes sont triées par valeur moyenne décroissante
+      // Verify that cities are sorted by descending average transaction value
       const avgValues = result.topCities.map((c) => c.averageTransactionValue);
       expect(avgValues[0]).toBeGreaterThanOrEqual(avgValues[1]);
     });
@@ -257,13 +257,13 @@ describe('ReportsService', () => {
 
       const result = await service.getCityPerformance();
 
-      // Lyon a 2 transactions: 600000 et 700000
+      // Lyon has 2 transactions: 600000 and 700000
       const lyon = result.topCities.find((c) => c.city === 'Lyon');
       expect(lyon).toBeDefined();
       expect(lyon!.transactionCount).toBe(2);
       expect(lyon!.averageTransactionValue).toBe(650000); // (600000 + 700000) / 2
 
-      // Paris a 2 transactions: 500000 et 300000
+      // Paris has 2 transactions: 500000 and 300000
       const paris = result.topCities.find((c) => c.city === 'Paris');
       expect(paris).toBeDefined();
       expect(paris!.transactionCount).toBe(2);
@@ -294,7 +294,7 @@ describe('ReportsService', () => {
     });
 
     it('should limit results to top 5 cities', async () => {
-      // Créer 10 villes différentes
+      // Create 10 different cities
       const manyTransactions = Array.from({ length: 10 }, (_, i) => ({
         id: `${i + 1}`,
         city: `City${i + 1}`,

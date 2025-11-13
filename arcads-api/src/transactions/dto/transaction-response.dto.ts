@@ -8,8 +8,8 @@ export class TransactionResponseDto {
   transactionDate: Date;
   transactionNetValue: number;
   transactionCost: number;
-  margin: number; // Calculé : transactionNetValue - transactionCost
-  marginPercentage: number; // Calculé : (margin / transactionCost) * 100
+  margin: number; // Calculated : transactionNetValue - transactionCost
+  marginPercentage: number; // Calculated : (margin / transactionCost) * 100
   createdAt: Date;
   updatedAt: Date;
 
@@ -24,7 +24,7 @@ export class TransactionResponseDto {
     this.createdAt = transaction.createdAt;
     this.updatedAt = transaction.updatedAt;
 
-    // Calculs automatiques
+    // Automatic calculations
     this.margin = this.transactionNetValue - this.transactionCost;
     this.marginPercentage =
       this.transactionCost > 0 ? (this.margin / this.transactionCost) * 100 : 0;

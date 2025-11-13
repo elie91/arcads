@@ -8,7 +8,7 @@ export default function Home() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          Vue d'ensemble des performances immobilières
+          Overview of real estate performance
         </p>
       </div>
 

@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 const navigation = [
   { name: "Dashboard", href: "/" },
   { name: "Transactions", href: "/transactions" },
-  { name: "Nouvelle Transaction", href: "/transactions/new" },
+  { name: "New Transaction", href: "/transactions/new" },
 ];
 
 export function NavBar() {
