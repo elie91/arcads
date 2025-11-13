@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PropertyType {
+  APARTMENT
+  HOUSE
+  LAND
+}
+
+model Transaction {
+  id                    String       @id @default(uuid())
+  city                  String
+  propertyType          PropertyType
+  area                  Float        // Surface en m²
+  transactionDate       DateTime
+  transactionNetValue   Float        // Prix de vente
+  transactionCost       Float        // Coût total (net value + taxes + frais)
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  @@map("transactions")
+}
