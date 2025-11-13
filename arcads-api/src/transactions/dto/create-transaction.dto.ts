@@ -4,7 +4,6 @@ import {
   IsNumber,
   IsDateString,
   IsPositive,
-  Min,
 } from 'class-validator';
 import { PropertyType } from '@prisma/client';
 
