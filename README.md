@@ -1,81 +1,93 @@
 # Dynamic Arcads Real Estate
 
-Application fullstack de gestion et reporting de transactions immobilières, développée avec NestJS (backend) et Next.js (frontend).
+Fullstack application for real estate transaction management and reporting, built with NestJS (backend) and Next.js (frontend).
 
 ## Architecture
 
 ```
 arcads/
-├── arcads-api/          # Backend NestJS
-├── arcads-web/          # Frontend Next.js
-├── docker-compose.yml   # Configuration PostgreSQL
-└── Makefile            # Commandes pour gérer le projet
+├── arcads-api/          # NestJS Backend
+├── arcads-web/          # Next.js Frontend
+├── docker-compose.yml   # PostgreSQL Configuration
+└── Makefile            # Project Management Commands
 ```
 
 ## Technologies
 
 ### Backend (arcads-api)
 
-- **NestJS** - Framework Node.js
-- **Prisma** - ORM pour PostgreSQL
-- **PostgreSQL** - Base de données
-- **TypeScript** - Langage
+- **NestJS** - Node.js Framework
+- **Prisma** - ORM for PostgreSQL
+- **PostgreSQL** - Database
+- **TypeScript** - Language
+- **Jest** - Testing Framework
 
 ### Frontend (arcads-web)
 
-- **Next.js 16** - Framework React
-- **React 19** - Bibliothèque UI
-- **TanStack Query** - Gestion des requêtes API
-- **Tailwind CSS** - Framework CSS
-- **shadcn/ui** - Composants UI
-- **TypeScript** - Langage
+- **Next.js 16** - React Framework
+- **React 19** - UI Library
+- **TanStack Query** - API State Management
+- **Tailwind CSS** - CSS Framework
+- **shadcn/ui** - UI Components
+- **TypeScript** - Language
 
-## Prérequis
+## Prerequisites
 
 - **Node.js** >= 18.x
-- **npm** ou **yarn**
-- **Docker** et **Docker Compose** v2
-- **Make** (optionnel mais recommandé)
+- **npm** or **yarn**
+- **Docker** and **Docker Compose** v2
+- **Make** (optional but recommended)
 
-## Installation
+## Quick Start
 
-### Option 1 : Setup complet avec Make (Recommandé)
+### Option 1: Complete Setup with Make (Recommended)
 
 ```bash
-# Setup complet : installation + DB + migrations
+# Complete setup: install dependencies + DB + migrations + seed data
 make setup
 
-# Démarrer l'environnement de développement (API + Web + DB)
+# Seed the database with test data
+cd arcads-api && npm run prisma:seed
+
+# Start development environment (API + Web + DB)
 make dev
 ```
 
-### Option 2 : Setup manuel
+The application will be available at:
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:3001
+- **API Documentation**: http://localhost:3001/api
+
+### Option 2: Manual Setup
 
 ```bash
-# 1. Installer les dépendances
+# 1. Install dependencies
 cd arcads-api && npm install
 cd ../arcads-web && npm install
 cd ..
 
-# 2. Démarrer PostgreSQL
+# 2. Start PostgreSQL
 docker compose up -d postgres
 
-# 3. Créer les migrations Prisma
+# 3. Run Prisma migrations
 cd arcads-api
 npx prisma migrate dev
 npx prisma generate
 
-# 4. Démarrer l'API (port 3001)
+# 4. Seed the database with test data
+npm run prisma:seed
+
+# 5. Start the API (port 3001)
 npm run start:dev
 
-# 5. Dans un autre terminal, démarrer le frontend (port 3000)
+# 6. In another terminal, start the frontend (port 3000)
 cd ../arcads-web
 npm run dev
 ```
 
 ## Configuration
 
-### Variables d'environnement
+### Environment Variables
 
 #### Backend (arcads-api/.env)
 
@@ -91,76 +103,119 @@ NODE_ENV=development
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
-## Commandes Make disponibles
+## Available Make Commands
 
-### Développement
-
-```bash
-make dev          # Démarrer API + Web + DB
-make api-dev      # Démarrer uniquement l'API
-make web-dev      # Démarrer uniquement le Web
-```
-
-### Base de données
+### Development
 
 ```bash
-make db-up        # Démarrer PostgreSQL
-make db-down      # Arrêter PostgreSQL
-make db-migrate   # Créer/appliquer les migrations
-make db-generate  # Générer le client Prisma
-make db-reset     # Réinitialiser la DB (⚠️ supprime toutes les données)
-make db-studio    # Ouvrir Prisma Studio (interface graphique)
+make dev          # Start API + Web + DB
+make api-dev      # Start API only
+make web-dev      # Start Web only
 ```
+
+### Database
+
+```bash
+make db-up        # Start PostgreSQL
+make db-down      # Stop PostgreSQL
+make db-migrate   # Create/apply migrations
+make db-generate  # Generate Prisma client
+make db-reset     # Reset DB (⚠️ deletes all data)
+make db-studio    # Open Prisma Studio (GUI)
+```
+
+**Seed Database:**
+```bash
+cd arcads-api && npm run prisma:seed
+```
+This populates the database with 103 test transactions.
 
 ### Build & Production
 
 ```bash
 make build        # Build API + Web
-make api-build    # Build API uniquement
-make web-build    # Build Web uniquement
-make start        # Démarrer en mode production
+make api-build    # Build API only
+make web-build    # Build Web only
+make start        # Start in production mode
 ```
 
 ### Maintenance
 
 ```bash
-make install      # Installer les dépendances
-make lint         # Linter le code
-make format       # Formatter le code
-make test         # Lancer les tests API
-make stop         # Arrêter tous les services
-make clean        # Nettoyer (node_modules, build, docker)
-make help         # Afficher toutes les commandes
+make install      # Install dependencies
+make lint         # Lint code
+make format       # Format code
+make test         # Run API tests
+make stop         # Stop all services
+make clean        # Clean (node_modules, build, docker)
+make help         # Display all commands
 ```
+
+## API Endpoints
+
+### Transactions
+
+- `POST /transactions` - Create a new transaction
+- `GET /transactions` - Get all transactions
+- `GET /transactions/:id` - Get a transaction by ID
+
+### Reports
+
+- `GET /reports/highest-margin` - Top 5 transactions with highest margin
+- `GET /reports/weekly-average-margin` - Weekly average margin comparison
+- `GET /reports/city-performance` - Top 5 cities by average transaction value
+
+## Testing
+
+```bash
+# Run all tests
+cd arcads-api && npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:cov
+```
+
+All 41 backend tests should pass successfully.
 
 ## Troubleshooting
 
-### Port déjà utilisé
+### Port Already in Use
 
 ```bash
-# Libérer le port 3001 (API)
+# Free port 3001 (API)
 lsof -ti:3001 | xargs kill -9
 
-# Libérer le port 3000 (Web)
+# Free port 3000 (Web)
 lsof -ti:3000 | xargs kill -9
 ```
 
-### Erreur de connexion DB
+### Database Connection Error
 
 ```bash
-# Vérifier que PostgreSQL tourne
+# Check if PostgreSQL is running
 docker ps
 
-# Redémarrer la DB
+# Restart the database
 make db-down && make db-up
 
-# Vérifier les logs
+# Check logs
 docker logs arcads-postgres
 ```
 
-### Prisma Client non généré
+### Prisma Client Not Generated
 
 ```bash
 cd arcads-api
 npx prisma generate
+```
+
+### Empty Database
+
+If your database is empty:
+```bash
+cd arcads-api
+npm run prisma:seed
 ```
